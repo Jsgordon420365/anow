@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="timestamp"></div>
+    <button onclick="copyTimestamp()">Copy to Clipboard</button>
+
+    <script>
+        function getTimestamp() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${year}${month}${day}${hours}${minutes}${seconds}`;
+        }
+
+        function updateTimestamp() {
+            document.getElementById('timestamp').textContent = getTimestamp();
+        }
+
+        function copyTimestamp() {
+            const timestamp = getTimestamp();
+            navigator.clipboard.writeText(timestamp).then(() => {
+                alert('Timestamp copied to clipboard: ' + timestamp);
+            }, () => {
+                alert('Failed to copy timestamp to clipboard');
+            });
+        }
+
+        setInterval(updateTimestamp, 1000); // Update the timestamp every second
+        updateTimestamp(); // Initial call to set the timestamp
+    </script>
+</body>
+</html>
